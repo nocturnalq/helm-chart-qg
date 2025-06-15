@@ -1,0 +1,7 @@
+remote: origin
+target-branch: main
+helm-extra-args: --debug
+chart-yaml-schema: ./ct/schema.yaml
+chart-dirs:
+  - base-chart
+excluded-charts: []

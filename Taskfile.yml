@@ -1,0 +1,30 @@
+# https://taskfile.dev
+
+version: '3'
+
+vars:
+  CHART: base-chart
+  K8S_VERSION: 1.32.0
+
+tasks:
+  lint:
+    cmds:
+      - ct lint # TODO
+  
+  unit:
+    cmds:
+      - helm unittest --update-snapshot \
+        -f "unit-tests/*.yaml" --output-type JUnit \
+        --output-file reports/test-report.xml "{{.CHART}}"
+  
+  schematest:
+    cmds:
+      - helm template "{{.CHART}}" | kubeconform --summary \
+        -- strict -ignore-missing-schemas --kubernetes-version "{{.K8S_VERSION}}"
+  
+  dry-run:
+    preconditions:
+      - kind create cluster --name helm-qg --config ./kind/cluster.yaml
+    cmds:
+      - helm install "{{ .CHART }}" --dry-run=server
+  
