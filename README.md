@@ -16,5 +16,5 @@ I decided to create an example project with some Quality Gates of my own.
 `Kind` - kubernetes in docker cluster \
 `Helm` - kubernetes application package manager \
 `Chart-testing` - tool for lintin and testing helm-chart pull requests \
-`Helm-unittest` - tool for unit testing helm templates \
+`Kyverno cli` - to unit test helm telmplates
 `Kubeconform` - kubernetes manifest validation tool \

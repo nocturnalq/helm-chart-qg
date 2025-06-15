@@ -15,11 +15,7 @@ tasks:
         --charts {{ .CHART }} --debug
   
   unit:
-    cmds:
-      - |
-        helm unittest --update-snapshot \
-        -f "unit-tests/*.yaml" --output-type JUnit \
-        --output-file reports/test-report.xml {{.CHART}}
+    cmds: #TODO Kyverno CLI
   
   schema:
     cmds:
