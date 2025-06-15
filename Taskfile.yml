@@ -9,18 +9,23 @@ vars:
 tasks:
   lint:
     cmds:
-      - ct lint # TODO
+      - |
+        ct lint --config ./ct/config.yaml \
+        --lint-conf ./ct/lint.yaml \
+        --charts {{ .CHART }} --debug
   
   unit:
     cmds:
-      - helm unittest --update-snapshot \
+      - |
+        helm unittest --update-snapshot \
         -f "unit-tests/*.yaml" --output-type JUnit \
-        --output-file reports/test-report.xml "{{.CHART}}"
+        --output-file reports/test-report.xml {{.CHART}}
   
-  schematest:
+  schema:
     cmds:
-      - helm template "{{.CHART}}" | kubeconform --summary \
-        -- strict -ignore-missing-schemas --kubernetes-version "{{.K8S_VERSION}}"
+      - |
+        helm template {{.CHART }} | kubeconform --summary \
+        --strict --ignore-missing-schemas --kubernetes-version {{ .K8S_VERSION }}
   
   dry-run:
     preconditions:
